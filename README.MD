@@ -1,0 +1,1 @@
+For laravel development [DockerHUB](https://hub.docker.com/r/lazerg/laravel-image)
