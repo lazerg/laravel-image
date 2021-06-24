@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
         graphviz \
         ghostscript \
         mc htop nano \
+        node yarn \
 
     # GD
     && docker-php-ext-configure gd \
