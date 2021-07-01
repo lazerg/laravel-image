@@ -35,3 +35,7 @@ RUN apt-get update && apt-get install -y \
         --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /var/www/
+
+EXPOSE 9000
+
+CMD ["php-fpm"]
