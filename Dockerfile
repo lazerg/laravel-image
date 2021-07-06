@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
         libonig-dev \
         graphviz \
         ghostscript \
-        dos2unix mc htop nano wget \
+        dos2unix mc htop nano wget nginx \
 
     # Nodejs
     && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
