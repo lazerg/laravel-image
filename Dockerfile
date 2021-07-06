@@ -32,7 +32,13 @@ RUN apt-get update && apt-get install -y \
 
     # Composer
     && curl -sS https://getcomposer.org/installer | php -- \
-        --install-dir=/usr/local/bin --filename=composer
+        --install-dir=/usr/local/bin --filename=composer \
+        
+    # Aliases
+    && echo "\
+    alias 'p=/var/www/backend/vendor/bin/phpunit'\n\
+    alias 'pf=/var/www/backend/vendor/bin/phpunit --filter'\n\
+    " >> ~/.bashrc
 
 WORKDIR /var/www/app/
 
