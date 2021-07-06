@@ -36,8 +36,8 @@ RUN apt-get update && apt-get install -y \
         
     # Aliases
     && echo "\
-    alias 'p=/var/www/backend/vendor/bin/phpunit'\n\
-    alias 'pf=/var/www/backend/vendor/bin/phpunit --filter'\n\
+    alias 'p=/var/www/app/vendor/bin/phpunit' \n\
+    alias 'pf=/var/www/app/vendor/bin/phpunit --filter' \n\
     " >> ~/.bashrc
 
 WORKDIR /var/www/app/
