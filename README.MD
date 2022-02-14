@@ -1,7 +1,7 @@
 # Building
 
 ```bash
-docker build -t lazerg/laravel:latest .
+docker build -t lazerg/laravel:latest . # for versioning: lazerg/laravel:php81
 docker image push lazerg/laravel:latest
 ```
 
