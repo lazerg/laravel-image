@@ -1,4 +1,4 @@
-FROM php:8.1.3-fpm
+FROM php:8.1.4-fpm
 
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
@@ -25,11 +25,16 @@ RUN apt-get update && apt-get install -y \
         --with-freetype=/usr/include/ \
     && docker-php-ext-install gd \
 
+    # Swoole
+    && pecl install swoole \
+    && docker-php-ext-enable swoole \
+
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-install zip \
     && docker-php-ext-install sockets \
+    && docker-php-ext-install pcntl \
     && docker-php-source delete \
-    
+
     # Postgresql
     && apt-get install -y libpq-dev \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
@@ -38,7 +43,7 @@ RUN apt-get update && apt-get install -y \
     # Composer
     && curl -sS https://getcomposer.org/installer | php -- \
         --install-dir=/usr/local/bin --filename=composer \
-        
+
     # Aliases
     && echo "\
     alias 'p=/var/www/app/vendor/bin/phpunit' \n\
