@@ -1,0 +1,42 @@
+name: GitHub Actions
+
+on: push
+
+env:
+  REPO: lazerg/laravel-image
+  DOCKER_USER: ${{secrets.DOCKER_USER}}
+  DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+
+jobs:
+  php80:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: docker login
+
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+      - name: Build the Docker image
+        run: docker build . --file php80.Dockerfile --tag $REPO:php80
+
+      - name: Docker push as php80
+        run: docker push $REPO:php80
+
+  php81:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: actions/checkout@v2
+        - name: docker login
+
+          run: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+        - name: Build the Docker image
+          run: docker build . --file php81.Dockerfile --tag $REPO:latest --tag $REPO:php81
+
+        - name: Docker push as latest
+          run: docker push $REPO:latest
+
+        - name: Docker push as php81
+          run: docker push $REPO:php81

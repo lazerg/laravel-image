@@ -30,6 +30,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable swoole \
 
     && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install intl \
+    && docker-php-ext-install redis \
+    && docker-php-ext-install exif \
     && docker-php-ext-install zip \
     && docker-php-ext-install sockets \
     && docker-php-ext-install pcntl \
