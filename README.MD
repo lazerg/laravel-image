@@ -9,9 +9,9 @@ docker image push lazerg/laravel:latest
 
 | Tag name | PHP Version | Node Version |
 |----------|-------------|--------------|
-| `latest` | **v8.1.6**  | v18.2.0      |
-| `php81`  | **v8.1.6**  | v18.2.0      |
-| `php80`  | **v8.0.19** | v18.2.0      |
+| `latest` | **v8.1.8**  | v18.6.0      |
+| `php81`  | **v8.1.8**  | v18.6.0      |
+| `php80`  | **v8.0.21** | v18.6.0      |
 
 # Links
 

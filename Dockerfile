@@ -1,4 +1,4 @@
-FROM php:8.1.6-fpm
+FROM php:8.1.8-fpm
 
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
