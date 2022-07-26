@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
         libzip-dev \
         libonig-dev \
         graphviz \
+        libicu-dev \
         ghostscript \
         dos2unix mc htop nano wget nginx \
 
@@ -31,6 +32,7 @@ RUN apt-get update && apt-get install -y \
 
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-install zip \
+    && docker-php-ext-install intl \
     && docker-php-ext-install sockets \
     && docker-php-ext-install pcntl \
     && docker-php-source delete \

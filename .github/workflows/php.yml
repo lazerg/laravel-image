@@ -3,7 +3,7 @@ name: GitHub Actions
 on: push
 
 env:
-  REPO: lazerg/laravel-image
+  REPO: lazerg/laravel
   DOCKER_USER: ${{secrets.DOCKER_USER}}
   DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
 
