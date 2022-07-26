@@ -1,4 +1,4 @@
-FROM php:8.1.8-fpm
+FROM php:8.0.21-fpm
 
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
@@ -29,10 +29,14 @@ RUN apt-get update && apt-get install -y \
     && pecl install swoole \
     && docker-php-ext-enable swoole \
 
+    # Redis
+    && pecl install -o -f redis \
+    &&  rm -rf /tmp/pear \
+    &&  docker-php-ext-enable redis \
+
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-install zip \
     && docker-php-ext-install intl \
-    && docker-php-ext-install redis \
     && docker-php-ext-install sockets \
     && docker-php-ext-install pcntl \
     && docker-php-source delete \
