@@ -24,6 +24,7 @@ jobs:
         run: docker push $REPO:php80
 
   php81:
+    needs: php80
     runs-on: ubuntu-latest
     steps:
         - uses: actions/checkout@v2
