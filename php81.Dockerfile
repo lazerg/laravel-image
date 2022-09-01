@@ -1,4 +1,4 @@
-FROM php:8.1.8-fpm
+FROM php:8.1.9-fpm
 
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
         graphviz \
         libicu-dev \
         ghostscript \
+        supervisor \
         dos2unix mc htop nano wget nginx \
 
     # Nodejs
