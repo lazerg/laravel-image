@@ -27,17 +27,33 @@ jobs:
     needs: php80
     runs-on: ubuntu-latest
     steps:
-        - uses: actions/checkout@v2
-        - name: docker login
+      - uses: actions/checkout@v2
+      - name: docker login
 
-          run: |
-            docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
-        - name: Build the Docker image
-          run: docker build . --file php81.Dockerfile --tag $REPO:latest --tag $REPO:php81
+      - name: Build the Docker image
+        run: docker build . --file php81.Dockerfile --tag $REPO:php81
 
-        - name: Docker push as latest
-          run: docker push $REPO:latest
+      - name: Docker push as php81
+        run: docker push $REPO:php81
 
-        - name: Docker push as php81
-          run: docker push $REPO:php81
+  php82:
+    needs: php81
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: docker login
+
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+      - name: Build the Docker image
+        run: docker build . --file php82.Dockerfile --tag $REPO:latest --tag $REPO:php82
+
+      - name: Docker push as latest
+        run: docker push $REPO:latest
+
+      - name: Docker push as php81
+        run: docker push $REPO:php82
