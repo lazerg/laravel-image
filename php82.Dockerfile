@@ -1,4 +1,4 @@
-FROM php:8.2.3-fpm
+FROM php:8.2.7-fpm
 
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
         dos2unix mc htop nano wget nginx \
 
     # Nodejs
-    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g yarn \
 
