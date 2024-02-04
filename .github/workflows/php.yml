@@ -50,10 +50,26 @@ jobs:
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
       - name: Build the Docker image
-        run: docker build . --file php82.Dockerfile --tag $REPO:latest --tag $REPO:php82
+        run: docker build . --file php82.Dockerfile --tag $REPO:php82
+
+      - name: Docker push as php82
+        run: docker push $REPO:php82
+
+  php83:
+    needs: php82
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: docker login
+
+        run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+      - name: Build the Docker image
+        run: docker build . --file php83.Dockerfile --tag $REPO:latest --tag $REPO:php83
 
       - name: Docker push as latest
         run: docker push $REPO:latest
 
-      - name: Docker push as php81
-        run: docker push $REPO:php82
+      - name: Docker push as php83
+        run: docker push $REPO:php83

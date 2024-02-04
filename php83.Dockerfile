@@ -1,4 +1,4 @@
-FROM php:8.0.30-fpm
+FROM php:8.3.2-fpm
 
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
         libzip-dev \
         libonig-dev \
         graphviz \
+        libicu-dev \
         ghostscript \
         supervisor \
         dos2unix mc htop nano wget nginx \
