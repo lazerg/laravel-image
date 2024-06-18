@@ -1,5 +1,6 @@
 FROM php:8.0.30-fpm
 
+# Update and install dependencies
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
@@ -10,31 +11,38 @@ RUN apt-get update && apt-get install -y \
         libzip-dev \
         libonig-dev \
         graphviz \
+        libicu-dev \
         ghostscript \
         supervisor \
-        dos2unix mc htop nano wget nginx \
+        dos2unix  \
+        mc  \
+        htop  \
+        nano  \
+        wget  \
+        nginx  \
+        git \
 
-    # Nodejs
+    # Node.js
     && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g yarn \
 
-    # GD
+    # GD extension
     && docker-php-ext-configure gd \
         --with-freetype=/usr/include/ \
         --with-jpeg=/usr/include/ \
-        --with-freetype=/usr/include/ \
     && docker-php-ext-install gd \
 
-    # Swoole
+    # Swoole extension
     && pecl install swoole \
     && docker-php-ext-enable swoole \
 
-    # Redis
+    # Redis extension
     && pecl install -o -f redis \
-    &&  rm -rf /tmp/pear \
-    &&  docker-php-ext-enable redis \
+    && rm -rf /tmp/pear \
+    && docker-php-ext-enable redis \
 
+    # Other PHP extensions
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-install zip \
     && docker-php-ext-install intl \
@@ -43,7 +51,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pcntl \
     && docker-php-source delete \
 
-    # Postgresql
+    # PostgreSQL
     && apt-get install -y libpq-dev \
     && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pdo pdo_pgsql pgsql \
@@ -52,10 +60,19 @@ RUN apt-get update && apt-get install -y \
     && curl -sS https://getcomposer.org/installer | php -- \
         --install-dir=/usr/local/bin --filename=composer \
 
+    # Install Xdebug
+    && pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && echo "zend_extension=xdebug.so" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_port=9003" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+
     # Aliases
     && echo "\
-    alias 'p=/var/www/app/vendor/bin/phpunit' \n\
-    alias 'pf=/var/www/app/vendor/bin/phpunit --filter' \n\
+    alias 'p=php artisan test' \n\
+    alias 'pf=php artisan test --filter=' \n\
     " >> ~/.bashrc
 
 WORKDIR /var/www/app/
