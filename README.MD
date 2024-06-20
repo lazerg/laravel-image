@@ -19,3 +19,4 @@ docker image push lazerg/laravel:latest
 
 - [PHP](https://hub.docker.com/_/php) Official Image
 - [lazerg/laravel](https://hub.docker.com/r/lazerg/laravel)
+- [xDebug Setup](https://youtu.be/4opFac50Vwo)
