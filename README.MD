@@ -1,10 +1,3 @@
-# Building
-
-```bash
-docker build -t lazerg/laravel:latest . # for versioning: lazerg/laravel:php82
-docker image push lazerg/laravel:latest
-```
-
 # Tags
 
 | Tag name | PHP Version | Node Version |
@@ -20,3 +13,9 @@ docker image push lazerg/laravel:latest
 - [PHP](https://hub.docker.com/_/php) Official Image
 - [lazerg/laravel](https://hub.docker.com/r/lazerg/laravel)
 - [xDebug Setup](https://youtu.be/4opFac50Vwo)
+
+# xDebug PHPStorm Configuration
+
+![xDebug PHPStorm Configuration](./assets/php_debug.png)
+
+![File Bindings](./assets/php_servers.png)
