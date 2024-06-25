@@ -7,7 +7,7 @@ if [ -z "$DOCKER_USER" ] || [ -z "$DOCKER_PASSWORD" ]; then
 fi
 
 # Login to Docker registry
-docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD" -e $DOCKER_EMAIL
+docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
 
 # Array of PHP versions
 versions=(8.0.30 8.1.29 8.2.20 8.3.8)
@@ -25,6 +25,7 @@ for version in "${versions[@]}"; do
         --build-arg PHP_VERSION=$version \
         --build-arg NODE_VERSION=20 \
         --build-arg WITH_XDEBUG=false \
+        --no-cache \
         --tag $REPO
     docker push $REPO
 
@@ -33,6 +34,7 @@ for version in "${versions[@]}"; do
         --build-arg PHP_VERSION=$version \
         --build-arg NODE_VERSION=20 \
         --build-arg WITH_XDEBUG=true \
+        --no-cache \
         --tag $REPO-xdebug
     docker push $REPO-xdebug
 done

@@ -46,7 +46,6 @@ RUN if [ "$WITH_XDEBUG" = "true" ]; then \
         # xDebug
         pecl install xdebug && \
         docker-php-ext-enable xdebug && \
-
         # xDebug configuration
         echo "zend_extension=xdebug.so" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
         echo "xdebug.mode=develop,debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
