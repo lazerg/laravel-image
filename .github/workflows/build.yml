@@ -16,6 +16,4 @@ jobs:
         run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
       - name: Run build script
-        run: |
-          chmod +x ./path_to_your_script/your_script.sh
-          ./path_to_your_script/your_script.sh
+        run: chmod +x ./build.sh && ./build.sh
