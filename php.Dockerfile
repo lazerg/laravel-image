@@ -1,8 +1,9 @@
 ARG PHP_VERSION=null
-ARG NODE_VERSION=null
-ARG WITH_XDEBUG=null
 
 FROM php:${PHP_VERSION}-fpm
+
+ARG NODE_VERSION=null
+ARG WITH_XDEBUG=null
 
 # Install dependencies
 RUN apt-get update
