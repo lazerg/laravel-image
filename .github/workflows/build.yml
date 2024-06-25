@@ -11,5 +11,6 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Run build script
         run: chmod +x ./build.sh && ./build.sh
