@@ -18,7 +18,7 @@ for version in "${versions[@]}"; do
     major_minor=$(echo $version | cut -d '.' -f1,2 | tr -d '.')
 
     # Define repository name
-    REPO="${REPO}/php$major_minor"
+    REPO="${REPO}:php$major_minor"
 
     # Build and push image without xdebug
     docker build . --file php.Dockerfile \
