@@ -18,7 +18,7 @@ for version in "${versions[@]}"; do
     major_minor=$(echo $version | cut -d '.' -f1,2 | tr -d '.')
 
     # Define repository name
-    REPO="${REPO}:php$major_minor"
+    REPOSITORY="${REPO}:php$major_minor"
 
     # Build and push image without xdebug
     docker build . --file php.Dockerfile \
@@ -26,8 +26,8 @@ for version in "${versions[@]}"; do
         --build-arg NODE_VERSION=20 \
         --build-arg WITH_XDEBUG=false \
         --no-cache \
-        --tag $REPO
-    docker push $REPO
+        --tag $REPOSITORY
+    docker push $REPOSITORY
 
     # Build and push image with xdebug
     docker build . --file php.Dockerfile \
@@ -35,6 +35,6 @@ for version in "${versions[@]}"; do
         --build-arg NODE_VERSION=20 \
         --build-arg WITH_XDEBUG=true \
         --no-cache \
-        --tag $REPO-xdebug
-    docker push $REPO-xdebug
+        --tag $REPOSITORY-xdebug
+    docker push $REPOSITORY-xdebug
 done
