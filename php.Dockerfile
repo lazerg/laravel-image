@@ -1,4 +1,9 @@
-FROM php:8.3.8-fpm
+ARG PHP_VERSION=null
+
+FROM php:${PHP_VERSION}-fpm
+
+ARG NODE_VERSION=null
+ARG WITH_XDEBUG=null
 
 # Install dependencies
 RUN apt-get update
@@ -38,16 +43,17 @@ RUN pecl install -o -f redis
 RUN rm -rf /tmp/pear
 RUN docker-php-ext-enable redis
 
-# xDebug
-RUN pecl install xdebug;
-RUN docker-php-ext-enable xdebug;
-
-# xDebug configuration
-RUN echo "zend_extension=xdebug.so" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.mode=develop,debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.discover_client_host=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN if [ "$WITH_XDEBUG" = "true" ]; then \
+        # xDebug
+        pecl install xdebug && \
+        docker-php-ext-enable xdebug && \
+        # xDebug configuration
+        echo "zend_extension=xdebug.so" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+        echo "xdebug.mode=develop,debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+        echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+        echo "xdebug.discover_client_host=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && \
+        echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini; \
+    fi
 
 # Other PHP extensions
 RUN docker-php-ext-install pdo_mysql
@@ -64,7 +70,7 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
 # Node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install -g yarn
 
