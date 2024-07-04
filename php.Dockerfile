@@ -26,6 +26,7 @@ RUN apt-get install -y nano
 RUN apt-get install -y wget
 RUN apt-get install -y nginx
 RUN apt-get install -y git
+RUN apt-get install -y sqlite3
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
