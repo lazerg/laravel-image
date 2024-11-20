@@ -4,7 +4,7 @@
 docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
 
 # Array of PHP versions
-versions=(8.0.30 8.1.29 8.2.20 8.3.8)
+versions=(8.0.30 8.1.30 8.2.25 8.3.13)
 
 # Iterate through each version
 for version in "${versions[@]}"; do
