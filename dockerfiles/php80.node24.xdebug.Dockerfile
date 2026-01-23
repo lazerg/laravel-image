@@ -30,8 +30,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 RUN docker-php-ext-install gd
 
-# Swoole extension
-RUN pecl install swoole
+# Swoole extension (4.8.x is the last version supporting PHP 8.0)
+RUN pecl install swoole-4.8.13
 RUN docker-php-ext-enable swoole
 
 # Redis extension
