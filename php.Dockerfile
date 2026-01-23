@@ -74,6 +74,7 @@ RUN docker-php-ext-install pdo pdo_pgsql pgsql
 RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install -g yarn
+RUN npm install -g pnpm
 
 # Aliases
 RUN echo "alias 'p=php artisan test'" >> ~/.bashrc
