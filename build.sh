@@ -1,34 +1,25 @@
 #!/bin/bash
 
-# Login to Docker registry
+# Authenticate with Docker registry
 docker login -u "$DOCKER_USER" -p "$DOCKER_PASSWORD"
 
-# Array of PHP versions
-versions=(8.0.30 8.1.33 8.2.29 8.3.26, 8.4.13)
+# PHP versions to build images for
+versions=(8.0.30 8.1.34 8.2.30 8.3.30 8.4.17 8.5.2)
 
-# Iterate through each version
 for version in "${versions[@]}"; do
-    # Extract major and minor version for image tag
-    major_minor=$(echo "$version" | cut -d '.' -f1,2 | tr -d '.')
+    # Extract major.minor (e.g., 8.3.30 -> 8.3) and format tag (e.g., php83)
+    major_minor=${version%.*}
+    tag="${REPO}:php${major_minor/./}"
 
-    # Define repository name
-    REPOSITORY="${REPO}:php$major_minor"
-
-    # Build and push image without xdebug
-    docker build . --file php.Dockerfile \
-        --build-arg PHP_VERSION="$version" \
-        --build-arg NODE_VERSION=20 \
-        --build-arg WITH_XDEBUG=false \
-        --no-cache \
-        --tag "$REPOSITORY" \
-        --push
-
-    # Build and push image with xdebug
-    docker build . --file php.Dockerfile \
-        --build-arg PHP_VERSION="$version" \
-        --build-arg NODE_VERSION=20 \
-        --build-arg WITH_XDEBUG=true \
-        --no-cache \
-        --tag "$REPOSITORY"-xdebug \
-        --push
+    # Build two variants: standard and with xdebug
+    for xdebug in false true; do
+        suffix=$([[ $xdebug == true ]] && echo "-xdebug" || echo "")
+        docker build . -f php.Dockerfile \
+            --build-arg PHP_VERSION="$version" \
+            --build-arg NODE_VERSION=20 \
+            --build-arg WITH_XDEBUG="$xdebug" \
+            --no-cache \
+            --tag "$tag$suffix" \
+            --push
+    done
 done
