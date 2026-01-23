@@ -31,8 +31,9 @@ RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/i
 RUN docker-php-ext-install gd
 
 # Swoole extension
-RUN pecl install swoole
-RUN docker-php-ext-enable swoole
+# At the moment no support for swoole, uncomment if it is supported in the future
+# RUN pecl install swoole
+# RUN docker-php-ext-enable swoole
 
 # Redis extension
 RUN pecl install -o -f redis
