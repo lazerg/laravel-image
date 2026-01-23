@@ -1,16 +1,49 @@
-name: GitHub Actions
+name: Build and Push Docker Images
 
 on: push
 
 env:
   REPO: lazerg/laravel
-  DOCKER_USER: ${{ secrets.DOCKER_USER }}
-  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - dockerfile: dockerfiles/php80.node24.Dockerfile
+            tag: php80
+          - dockerfile: dockerfiles/php80.node24.xdebug.Dockerfile
+            tag: php80-xdebug
+          - dockerfile: dockerfiles/php81.node24.Dockerfile
+            tag: php81
+          - dockerfile: dockerfiles/php81.node24.xdebug.Dockerfile
+            tag: php81-xdebug
+          - dockerfile: dockerfiles/php82.node24.Dockerfile
+            tag: php82
+          - dockerfile: dockerfiles/php82.node24.xdebug.Dockerfile
+            tag: php82-xdebug
+          - dockerfile: dockerfiles/php83.node24.Dockerfile
+            tag: php83
+          - dockerfile: dockerfiles/php83.node24.xdebug.Dockerfile
+            tag: php83-xdebug
+          - dockerfile: dockerfiles/php84.node24.Dockerfile
+            tag: php84
+          - dockerfile: dockerfiles/php84.node24.xdebug.Dockerfile
+            tag: php84-xdebug
+          - dockerfile: dockerfiles/php85.node24.Dockerfile
+            tag: php85
+          - dockerfile: dockerfiles/php85.node24.xdebug.Dockerfile
+            tag: php85-xdebug
     steps:
-      - uses: actions/checkout@v2
-      - name: Run build script
-        run: chmod +x ./build.sh && ./build.sh
+      - uses: actions/checkout@v4
+
+      - name: Login to Docker Hub
+        run: docker login -u "${{ secrets.DOCKER_USER }}" -p "${{ secrets.DOCKER_PASSWORD }}"
+
+      - name: Build and push ${{ matrix.tag }}
+        run: |
+          docker build . -f ${{ matrix.dockerfile }} \
+            --no-cache \
+            --tag "${{ env.REPO }}:${{ matrix.tag }}" \
+            --push
