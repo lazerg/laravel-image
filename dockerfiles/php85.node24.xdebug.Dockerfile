@@ -1,4 +1,4 @@
-FROM php:8.5.2-fpm
+FROM php:8.5.9-fpm
 
 # Install dependencies
 RUN apt-get update

@@ -1,4 +1,4 @@
-FROM php:8.2.30-fpm
+FROM php:8.2.33-fpm
 
 # Install dependencies
 RUN apt-get update

@@ -21,10 +21,10 @@ services:
 
 | Tag Name | PHP Version | Node Version |
 | --- | --- | --- |
-| `php85`, `php85-xdebug` | `8.5.2` | `v24` |
-| `php84`, `php84-xdebug` | `8.4.17` | `v24` |
-| `php83`, `php83-xdebug` | `8.3.30` | `v24` |
-| `php82`, `php82-xdebug` | `8.2.30` | `v24` |
+| `php85`, `php85-xdebug` | `8.5.9` | `v24` |
+| `php84`, `php84-xdebug` | `8.4.24` | `v24` |
+| `php83`, `php83-xdebug` | `8.3.33` | `v24` |
+| `php82`, `php82-xdebug` | `8.2.33` | `v24` |
 | `php81`, `php81-xdebug` | `8.1.34` | `v24` |
 | `php80`, `php80-xdebug` | `8.0.30` | `v24` |
 
