@@ -5,6 +5,7 @@ RUN apt-get update
 RUN apt-get install -y libfreetype6-dev
 RUN apt-get install -y libjpeg62-turbo-dev
 RUN apt-get install -y libmcrypt-dev
+RUN apt-get install -y libssl-dev
 RUN apt-get install -y libpng-dev
 RUN apt-get install -y zlib1g-dev
 RUN apt-get install -y libxml2-dev
