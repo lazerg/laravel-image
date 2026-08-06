@@ -1,4 +1,4 @@
-FROM php:8.4.17-fpm
+FROM php:8.4.24-fpm
 
 # Install dependencies
 RUN apt-get update
