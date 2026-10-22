@@ -9,31 +9,32 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         include:
-          - dockerfile: dockerfiles/php80.node24.Dockerfile
+          - dockerfile: dockerfiles/php80.node26.Dockerfile
             tag: php80
-          - dockerfile: dockerfiles/php80.node24.xdebug.Dockerfile
+          - dockerfile: dockerfiles/php80.node26.xdebug.Dockerfile
             tag: php80-xdebug
-          - dockerfile: dockerfiles/php81.node24.Dockerfile
+          - dockerfile: dockerfiles/php81.node26.Dockerfile
             tag: php81
-          - dockerfile: dockerfiles/php81.node24.xdebug.Dockerfile
+          - dockerfile: dockerfiles/php81.node26.xdebug.Dockerfile
             tag: php81-xdebug
-          - dockerfile: dockerfiles/php82.node24.Dockerfile
+          - dockerfile: dockerfiles/php82.node26.Dockerfile
             tag: php82
-          - dockerfile: dockerfiles/php82.node24.xdebug.Dockerfile
+          - dockerfile: dockerfiles/php82.node26.xdebug.Dockerfile
             tag: php82-xdebug
-          - dockerfile: dockerfiles/php83.node24.Dockerfile
+          - dockerfile: dockerfiles/php83.node26.Dockerfile
             tag: php83
-          - dockerfile: dockerfiles/php83.node24.xdebug.Dockerfile
+          - dockerfile: dockerfiles/php83.node26.xdebug.Dockerfile
             tag: php83-xdebug
-          - dockerfile: dockerfiles/php84.node24.Dockerfile
+          - dockerfile: dockerfiles/php84.node26.Dockerfile
             tag: php84
-          - dockerfile: dockerfiles/php84.node24.xdebug.Dockerfile
+          - dockerfile: dockerfiles/php84.node26.xdebug.Dockerfile
             tag: php84-xdebug
-          - dockerfile: dockerfiles/php85.node24.Dockerfile
+          - dockerfile: dockerfiles/php85.node26.Dockerfile
             tag: php85
-          - dockerfile: dockerfiles/php85.node24.xdebug.Dockerfile
+          - dockerfile: dockerfiles/php85.node26.xdebug.Dockerfile
             tag: php85-xdebug
     steps:
       - uses: actions/checkout@v4

@@ -1,4 +1,7 @@
-FROM php:8.5.9-fpm
+FROM php:8.0.30-fpm
+
+# Debian 11 (bullseye) is end of life, its packages are served from archive.debian.org
+RUN sed -i 's|deb.debian.org|archive.debian.org|g' /etc/apt/sources.list
 
 # Install dependencies
 RUN apt-get update
@@ -30,15 +33,23 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 RUN docker-php-ext-install gd
 
-# Swoole extension
-# At the moment no support for swoole, uncomment if it is supported in the future
-# RUN pecl install swoole
-# RUN docker-php-ext-enable swoole
+# Swoole extension (4.8.x is the last version supporting PHP 8.0)
+RUN for i in 1 2 3 4 5; do pecl install https://pecl.php.net/get/swoole-4.8.13.tgz && exit 0; sleep 10; done; exit 1
+RUN docker-php-ext-enable swoole
 
 # Redis extension
-RUN pecl install -o -f redis
+RUN for i in 1 2 3 4 5; do pecl install -o -f https://pecl.php.net/get/redis-6.3.0.tgz && exit 0; sleep 10; done; exit 1
 RUN rm -rf /tmp/pear
 RUN docker-php-ext-enable redis
+
+# xDebug
+RUN for i in 1 2 3 4 5; do pecl install https://pecl.php.net/get/xdebug-3.5.3.tgz && exit 0; sleep 10; done; exit 1
+RUN docker-php-ext-enable xdebug
+RUN echo "zend_extension=xdebug.so" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.mode=develop,debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.discover_client_host=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 # Other PHP extensions
 RUN docker-php-ext-install pdo_mysql
@@ -55,7 +66,7 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
 # Node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_26.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install -g yarn
 RUN npm install -g pnpm

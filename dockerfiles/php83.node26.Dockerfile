@@ -1,10 +1,11 @@
-FROM php:8.0.30-fpm
+FROM php:8.3.36-fpm
 
 # Install dependencies
 RUN apt-get update
 RUN apt-get install -y libfreetype6-dev
 RUN apt-get install -y libjpeg62-turbo-dev
 RUN apt-get install -y libmcrypt-dev
+RUN apt-get install -y libssl-dev
 RUN apt-get install -y libpng-dev
 RUN apt-get install -y zlib1g-dev
 RUN apt-get install -y libxml2-dev
@@ -30,12 +31,12 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 RUN docker-php-ext-install gd
 
-# Swoole extension (4.8.x is the last version supporting PHP 8.0)
-RUN pecl install swoole-4.8.13
+# Swoole extension
+RUN for i in 1 2 3 4 5; do pecl install swoole && exit 0; sleep 10; done; exit 1
 RUN docker-php-ext-enable swoole
 
 # Redis extension
-RUN pecl install -o -f redis
+RUN for i in 1 2 3 4 5; do pecl install -o -f redis && exit 0; sleep 10; done; exit 1
 RUN rm -rf /tmp/pear
 RUN docker-php-ext-enable redis
 
@@ -54,7 +55,7 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
 # Node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_26.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install -g yarn
 RUN npm install -g pnpm

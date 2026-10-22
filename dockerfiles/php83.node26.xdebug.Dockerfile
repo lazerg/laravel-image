@@ -1,4 +1,4 @@
-FROM php:8.3.33-fpm
+FROM php:8.3.36-fpm
 
 # Install dependencies
 RUN apt-get update
@@ -32,13 +32,22 @@ RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/i
 RUN docker-php-ext-install gd
 
 # Swoole extension
-RUN pecl install swoole
+RUN for i in 1 2 3 4 5; do pecl install swoole && exit 0; sleep 10; done; exit 1
 RUN docker-php-ext-enable swoole
 
 # Redis extension
-RUN pecl install -o -f redis
+RUN for i in 1 2 3 4 5; do pecl install -o -f redis && exit 0; sleep 10; done; exit 1
 RUN rm -rf /tmp/pear
 RUN docker-php-ext-enable redis
+
+# xDebug
+RUN for i in 1 2 3 4 5; do pecl install xdebug && exit 0; sleep 10; done; exit 1
+RUN docker-php-ext-enable xdebug
+RUN echo "zend_extension=xdebug.so" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.mode=develop,debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.discover_client_host=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+RUN echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 # Other PHP extensions
 RUN docker-php-ext-install pdo_mysql
@@ -55,7 +64,7 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
 # Node.js
-RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_26.x | bash -
 RUN apt-get install -y nodejs
 RUN npm install -g yarn
 RUN npm install -g pnpm
